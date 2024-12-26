@@ -15,14 +15,14 @@ ma = Marshmallow(app=None)
 def import_models():
     """import modules dynamically"""
 
-    MODEL_PATHS = ["src.customers.models", "src.accounts.models"]
+    MODEL_PATHS = ["src.individuals.models", "src.accounts.models"]
 
     for path in MODEL_PATHS:
         importlib.import_module(path)
 
 
 def create_app():
-    # from src.customers import models
+    # from src.individuals import models
     # from src.accounts import models
     app = APIFlask(__name__, title="Invoicing API")
     app.config.from_object(Config)
@@ -33,7 +33,7 @@ def create_app():
     import_models()
 
     # blueprints
-    from .customers import views
+    from .individuals import views
 
     app.register_blueprint(views.bp)
 
