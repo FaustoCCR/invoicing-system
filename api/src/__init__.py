@@ -15,7 +15,8 @@ ma = Marshmallow(app=None)
 def import_models():
     """import modules dynamically"""
 
-    MODEL_PATHS = ["src.individuals.models", "src.accounts.models"]
+    MODEL_PATHS = ["src.individuals.models", "src.accounts.models",
+                   "src.products.models"]
 
     for path in MODEL_PATHS:
         importlib.import_module(path)
@@ -33,9 +34,11 @@ def create_app():
     import_models()
 
     # blueprints
-    from .individuals import views
+    from .individuals.views import bp as ibp
+    from .products.views import products_bp
 
-    app.register_blueprint(views.bp)
+    app.register_blueprint(ibp)
+    app.register_blueprint(products_bp)
 
     # create the tables
     """ with app.app_context():
