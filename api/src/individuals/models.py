@@ -9,5 +9,5 @@ class Person(db.Model):
     name: Mapped[str] = mapped_column(String(60),nullable=False)
     lastname: Mapped[str] = mapped_column(String(60), nullable=False)
     dni: Mapped[str] = mapped_column(String(10), nullable=False, unique=True)
-    phone: Mapped[str] = mapped_column(String(20))
+    phone: Mapped[str] = mapped_column(String(17))
     email: Mapped[str] = mapped_column(String(60), nullable=False, unique=True)
