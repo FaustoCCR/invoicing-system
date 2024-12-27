@@ -1,5 +1,5 @@
 from .. import db
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import String
 
 
@@ -11,3 +11,6 @@ class Person(db.Model):
     dni: Mapped[str] = mapped_column(String(10), nullable=False, unique=True)
     phone: Mapped[str] = mapped_column(String(17))
     email: Mapped[str] = mapped_column(String(60), nullable=False, unique=True)
+
+    # One-to-many relationships
+    invoices = relationship("Invoice", back_populates="person")

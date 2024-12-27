@@ -16,7 +16,7 @@ def import_models():
     """import modules dynamically"""
 
     MODEL_PATHS = ["src.individuals.models", "src.accounts.models",
-                   "src.products.models"]
+                   "src.products.models", "src.invoicing.models"]
 
     for path in MODEL_PATHS:
         importlib.import_module(path)
