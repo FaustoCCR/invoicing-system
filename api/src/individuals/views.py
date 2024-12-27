@@ -1,7 +1,7 @@
 from .schemas import PersonSchema
 from .models import Person
 from .repository import PeopleRepository
-from .services import CustomPeopleService, PeopleService
+from .services import PeopleService
 from flask.views import MethodView
 from apiflask import APIBlueprint
 from .. import db
@@ -10,8 +10,7 @@ bp = APIBlueprint("people", __name__, url_prefix="/people")
 
 # repository = SQLAlchemyRepository[Person, int](session=db.session, model=Person)
 repository = PeopleRepository(session=db.session)
-# service = PeopleService(repository)
-service = CustomPeopleService(repository)
+service = PeopleService(repository)
 
 
 class PersonView(MethodView):
