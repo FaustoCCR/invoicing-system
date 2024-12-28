@@ -14,15 +14,15 @@ repository = SQLAlchemyRepository[Classification, int](db.session, Classificatio
 service = Service(repository)
 
 
-class ClassificationsGroupView(MethodView):
+class ClassificationGroupView(MethodView):
     @bp.output(ClassificationSchema(many=True))
     def get(self):
         return service.get_all()
 
     @bp.input(ClassificationSchema)
-    @bp.output(ClassificationSchema, status_code=201)
+    @bp.output(ClassificationSchema(exclude=("products",)), status_code=201)
     def post(self, json_data):
         return service.create(json_data)
 
 
-bp.add_url_rule("", view_func=ClassificationsGroupView.as_view("classifications"))
+bp.add_url_rule("", view_func=ClassificationGroupView.as_view("classifications"))
