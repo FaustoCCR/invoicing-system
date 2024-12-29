@@ -1,5 +1,5 @@
 from .. import db
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 from sqlalchemy import ForeignKey, String, Float, Integer
 from datetime import datetime, timezone
 
@@ -24,16 +24,14 @@ class PaymentType(db.Model):
     db.Column("subtotal", Float, nullable=False),
 )
  """
+
+
 class InvoiceItem(db.Model):
     __tablename__ = "invoice_items"
 
     # FKs
-    invoice_id: Mapped[int] = mapped_column(
-        Integer, ForeignKey("invoices.id"), nullable=False
-    )
-    product_id: Mapped[int] = mapped_column(
-        Integer, ForeignKey("products.id"), nullable=False
-    )
+    invoice_id: Mapped[int] = mapped_column(ForeignKey("invoices.id"), nullable=False)
+    product_id: Mapped[int] = mapped_column(ForeignKey("products.id"), nullable=False)
 
     quantity: Mapped[int] = mapped_column(Integer, nullable=False)
     price: Mapped[float] = mapped_column(Float(precision=2), nullable=False)

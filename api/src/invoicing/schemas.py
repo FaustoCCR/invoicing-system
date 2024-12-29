@@ -1,5 +1,6 @@
 from .. import ma
-from .models import PaymentType, Invoice
+from .models import PaymentType, Invoice, InvoiceItem
+from marshmallow_sqlalchemy.fields import Nested
 
 
 class PaymentTypeSchema(ma.SQLAlchemyAutoSchema):
@@ -7,8 +8,16 @@ class PaymentTypeSchema(ma.SQLAlchemyAutoSchema):
         model = PaymentType
 
 
+class InvoiceItemSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = InvoiceItem
+        include_fk = True
+
+
 class InvoiceSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Invoice
         include_fk = True
-        include_relationships = True
+        # include_relationships = True
+
+    items = Nested(InvoiceItemSchema, many=True, exclude=("invoice_id",))
