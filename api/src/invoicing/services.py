@@ -14,13 +14,15 @@ class InvoiceService(AbstractService):
         return Invoice.query.all()
 
     def get_by_id(self, id):
-        return super().get_by_id(id)
+        return Invoice.query.get_or_404(id)
 
     def update(self, id, data):
         return super().update(id, data)
 
     def delete(self, id):
-        return super().delete(id)
+        item = self.get_by_id(id)
+        self.session.delete(item)
+        self.session.commit()
 
     def create(self, data):
         try:

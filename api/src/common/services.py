@@ -39,7 +39,10 @@ class Service(AbstractService):
         return self.repository.find_all()
 
     def update(self, id, data: dict):
-        return self.repository.update(data)
+        item = self.get_by_id(id)
+        for attr, value in data.items():
+            setattr(item, attr, value)
+        return self.repository.update(item)
 
     def delete(self, id):
         return self.repository.delete_by_id(id)

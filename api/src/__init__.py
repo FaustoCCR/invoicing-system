@@ -2,6 +2,7 @@ import importlib
 from apiflask import APIFlask
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
+from flask_bcrypt import Bcrypt
 from flask_migrate import Migrate
 from flask_marshmallow import Marshmallow
 from src.common.models import Base
@@ -9,7 +10,8 @@ from src.common.models import Base
 
 db = SQLAlchemy(model_class=Base)
 migrate = Migrate()
-ma = Marshmallow(app=None)
+ma = Marshmallow()
+bcrypt = Bcrypt()
 
 
 def import_models():
@@ -34,15 +36,21 @@ def create_app():
     db.init_app(app)
     migrate.init_app(app, db)
     ma.init_app(app)
+    bcrypt.init_app(app)
 
     import_models()
 
     # blueprints
+    from .auth.views import auth_bp
     from .individuals.views import bp as ibp
     from .products.views import products_bp
     from .invoicing.views import invoices_bp
+    from .accounts.views import users_bp, roles_bp
 
+    app.register_blueprint(auth_bp)
     app.register_blueprint(ibp)
+    app.register_blueprint(users_bp)
+    app.register_blueprint(roles_bp)
     app.register_blueprint(products_bp)
     app.register_blueprint(invoices_bp)
 

@@ -1,10 +1,12 @@
+from .. import db
 from .schemas import PersonSchema
 from .models import Person
 from .repository import PeopleRepository
 from .services import PeopleService
 from flask.views import MethodView
 from apiflask import APIBlueprint
-from .. import db
+from ..auth.services import auth
+
 
 bp = APIBlueprint("people", __name__, url_prefix="/people")
 
@@ -14,12 +16,28 @@ service = PeopleService(repository)
 
 
 class PersonView(MethodView):
+
+    def _get_item(self, id):
+        return Person.query.get_or_404(id)
+
+    @bp.auth_required(auth)
     @bp.output(PersonSchema)
     def get(self, id: int):
-        return Person.query.get_or_404(id)
+        return self._get_item(id)
+
+    @bp.input(PersonSchema, location="json")
+    @bp.output(PersonSchema)
+    def put(self, id, json_data):
+        return service.update(id, json_data)
+
+    @bp.output({}, status_code=204)
+    def delete(self, id):
+        return service.delete(id)
 
 
 class PeopleView(MethodView):
+
+    @bp.auth_required(auth)
     @bp.output(PersonSchema(many=True))
     def get(self):
         # return Person.query.all()

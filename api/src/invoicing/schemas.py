@@ -13,6 +13,9 @@ class InvoiceItemSchema(ma.SQLAlchemyAutoSchema):
         model = InvoiceItem
         include_fk = True
 
+    price = ma.auto_field(dump_only=True)
+    subtotal = ma.auto_field(dump_only=True)
+
 
 class InvoiceSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
@@ -20,4 +23,12 @@ class InvoiceSchema(ma.SQLAlchemyAutoSchema):
         include_fk = True
         # include_relationships = True
 
-    items = Nested(InvoiceItemSchema, many=True, exclude=("invoice_id",))
+    total = ma.auto_field(dump_only=True)
+    items = Nested(
+        InvoiceItemSchema,
+        many=True,
+        exclude=(
+            "id",
+            "invoice_id",
+        ),
+    )
