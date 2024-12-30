@@ -1,6 +1,5 @@
-from datetime import datetime, timezone
 from sqlalchemy import ForeignKey, Integer
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, declared_attr
+from sqlalchemy.orm import DeclarativeBase, mapped_column, declared_attr
 
 
 # Model Class
