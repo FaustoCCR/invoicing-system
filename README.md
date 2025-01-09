@@ -21,9 +21,9 @@ docker-compose up --build
 
 3. **Access the API:**
 
-Once the services are running, you can access the API at `http://localhost:5000`.
+Once the services are running, you can access the API at http://localhost:5000.
 
 ## Usage
 
 After setting up the project, you can interact with the API using tools like Postman, curl or the Swagger
-documentation generated at `http://localhost:5000/docs`.
+documentation generated at http://localhost:5000/docs.
