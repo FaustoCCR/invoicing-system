@@ -17,6 +17,8 @@ service = PeopleService(repository)
 
 class PersonView(MethodView):
 
+    decorators = [bp.auth_required(auth)]
+
     def _get_item(self, id):
         return Person.query.get_or_404(id)
 

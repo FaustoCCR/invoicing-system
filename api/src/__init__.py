@@ -44,7 +44,7 @@ def create_app():
     from .auth.views import auth_bp
     from .individuals.views import bp as ibp
     from .products.views import products_bp
-    from .invoicing.views import invoices_bp
+    from .invoicing.views import invoices_bp, payment_type_bp
     from .accounts.views import users_bp, roles_bp
 
     app.register_blueprint(auth_bp)
@@ -53,8 +53,9 @@ def create_app():
     app.register_blueprint(roles_bp)
     app.register_blueprint(products_bp)
     app.register_blueprint(invoices_bp)
+    app.register_blueprint(payment_type_bp)
 
     # create the tables
-    """ with app.app_context():
-    db.create_all() """
+    with app.app_context():
+        db.create_all()
     return app
